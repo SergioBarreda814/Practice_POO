@@ -1,0 +1,36 @@
+//Tablero de serpientes y escaleras
+
+//Estructura de juego y movilidad
+class Tablero{	
+this.casillas=100;
+this.escaleras=escaleras
+this.serpientes=serpientes
+   
+serpientes{
+let casilla=new Array;
+let caida=new Array;
+casilla=[16,46,49,62,64,74,89,92,95,99];
+caida = [06,25,11,19,60,53,68,88,75,80];
+}
+escaleras{
+let base=new Array;
+let subir=new Array;
+base= [02,07,15,21,28,36,51,71,78];
+subir=[38,14,26,42,64,44,67,91,98];
+}
+ 
+  class Dado{
+    girar(){
+      return Math.floor(Math.random()*6+1);
+    }
+  }
+//Jugadores
+  class Jugador{
+    constructor(numero,color){
+      this.numero=numero;
+      this._pos=0;
+      this.color=color
+      this.dado=new Dado();
+    }
+   
+  }

@@ -1,0 +1,85 @@
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+<div id='app'>
+    <h5>SISTEMA DE VISUALIZACIÓN DE USUARIOS/PUBLICACIONES/COMENTARIOS</h5>
+  <p>Alumno: Barreda Martínez Sergio Emmanuel     2°A</p>  
+   <button type='button' id='btnCargar' class="btn btn-outline-success">Cargar Usuarios</button>
+  <select id="Usuarios">
+  </select>
+</div>
+<div id='info'>
+
+</div>
+
+
+<div id='detalles'>
+    <button type='button' id='btnCargar' class="btn btn-outline-warning">Cargar Publicaciones</button>
+</div>
+
+<script>
+  const btnCargar=document.getElementById('btnCargar');
+  btnCargar.addEventListener('click',()=>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(datos => {
+      let det=document.getElementById('Usuarios');
+      det.innerHTML += `<option selected>Seleccione un usuario</option>`
+      datos.forEach(usr=>{
+        det.innerHTML += `<option value="${usr.id}">${usr.username}</option>`;  
+      })
+    })
+  })
+ const select = document.getElementById('Usuarios');
+ select.addEventListener('change',()=>{
+   fetch('https://jsonplaceholder.typicode.com/users/'+ Usuarios.value)
+    .then(response => response.json())
+    .then(datos => {
+      let info=document.getElementById('info');
+      info.innerHTML = `<div class="card text-bg-light mb-3" style="max-width: 25rem;">
+<div class="card-header">DATOS DEL USUARIO</div>
+<h2 class="card-title">"${datos.username}"</h4>
+<h5 class="card-subtitle mb-2 text-muted">Nombre: ${datos.name}</h5>
+<p class="card-text">Email: ${datos.email}</p>
+  </div>`;  
+    })  
+    })
+ 
+  const publi=document.getElementById("detalles")
+  publi.addEventListener('click',()=>{
+    fetch('https://jsonplaceholder.typicode.com/users/'+ Usuarios.value + '/posts')
+      .then(response => response.json())
+      .then(datos =>{
+      let post1=document.getElementById('info');
+      info.innerHTML +=`<h2 class="text-primary">PUBLICACIONES:</h2>`
+      datos.forEach(datos =>{
+        info.innerHTML += `<div><h3 class="text-success">${datos.title}</h3><p class="text-body">${datos.body}</p>
+<div id=dv${datos.id}>
+</div>
+<button onclick='ponerComentario (${datos.id})' class="btn btn-primary">Abrir Comentarios</button>
+  </div>`
+      })   
+    })                                
+  })
+   function ponerComentario(id){
+     let btnClose=document.getElementById('dv' + id)
+     btnClose.innerHTML += `<button onclick='quitarComentario(${id})' class="btn btn-secondary">Cerrar Comentarios</button>`
+     fetch('https://jsonplaceholder.typicode.com/post/'+ id +'/comments')
+     .then(response => response.json())
+     .then(comment =>{
+       let agree=document.getElementById("dv" + id) 
+       comment.forEach(comment => {
+         agree.innerHTML += `<div class="card" style="width: 75rem;">
+  <div class="card-body">
+<h6 class="card-title">${comment.name}</h6>
+<p class="card-subtitle mb-2 text-muted">-${comment.email}</p>
+<p class="card-text">${comment.body}</p>`;
+       })       
+     })
+   }
+  function quitarComentario(id){
+    let cerrar=document.getElementById('dv' + id)
+    cerrar.innerHTML=' ';
+  }
+   
+</script>
