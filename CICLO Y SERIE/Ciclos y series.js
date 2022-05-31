@@ -1,6 +1,6 @@
 //CICLOS Y SERIES
 //Alumno:Barreda Martínez Sergio Emmanuel ||2°A
-
+//HOLA YA ES DE NOCHE PRUEBA MAÑANA
 //FUNCIONES UTILIZADAS EN LOS CODIGOS:
 
   function factorial(n){
